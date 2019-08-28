@@ -1,3 +1,35 @@
+//Variable para seleccionar #paleta del dom y guardarlo en un variable con jQuery
+var paleta = document.getElementById("paleta");
+var paleta1 = $("#paleta");
+
+//Variable para seleccionar #grilla-pixeles del dom y guardarlo en un variable con jQuery
+var grillaPixeles = document.getElementById("grilla-pixeles");
+
+//function que recorra la lista de colores nombreColores y cree un elemento div
+ function crearDivPaleta(){
+  for(var i = 0; i<nombreColores.length; i++){
+    var divNuevo = document.createElement("div");
+    //asigne un background-color: color
+    divNuevo.style.backgroundColor = "color";
+    //asigne clase .color-paleta
+    divNuevo.className ="color-paleta";
+    //agrega el elemento como hijo del elemento paleta
+    paleta.appendChild(divNuevo);
+    };
+ };
+
+ //Codigo que crea
+
+function crearCajasPixeles(){
+  var numeroDePixeles=1750;
+  for(var i = 0; i<numeroDePixeles; i++){
+  var pixel=document.createElement("div");
+	pixel.className="cursor-personalizado";
+	grillaPixeles.appendChild(pixel);
+	
+  };
+};
+crearCajasPixeles(grillaPixeles);
 var nombreColores = ['White', 'LightYellow',
   'LemonChiffon', 'LightGoldenrodYellow', 'PapayaWhip', 'Moccasin', 'PeachPuff', 'PaleGoldenrod', 'Bisque', 'NavajoWhite', 'Wheat', 'BurlyWood', 'Tan',
   'Khaki', 'Yellow', 'Gold', 'Orange', 'DarkOrange', 'OrangeRed', 'Tomato', 'Coral', 'DarkSalmon', 'LightSalmon', 'LightCoral', 'Salmon', 'PaleVioletRed',
@@ -20,6 +52,7 @@ var nombreColores = ['White', 'LightYellow',
   'DimGray', 'LightSlateGray', 'DarkSlateGray', 'Black'
 ];
 
+
 // Variable para guardar el elemento 'color-personalizado'
 // Es decir, el que se elige con la rueda de color.
 var colorPersonalizado = document.getElementById('color-personalizado');
@@ -33,3 +66,6 @@ colorPersonalizado.addEventListener('change',
 
   })
 );
+
+
+ $(document).ready(crearDivPaleta);
