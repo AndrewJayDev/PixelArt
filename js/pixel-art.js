@@ -27,6 +27,8 @@ var paleta = document.getElementById("paleta");
 var grillaPixeles = document.getElementById("grilla-pixeles");
 //variable para seleccionar #indicador-de-color del dom
 var indicador= document.getElementById("indicador-de-color");
+//variable which is false by default unless the mouse is pressed down
+var mouseDown;
 
 
 
@@ -58,33 +60,45 @@ function crearCajasPixeles(){
   };
 };
 crearCajasPixeles(grillaPixeles);
-// function to change pixel color of div clicked
 
+// function to change pixel color of div clicked
 function changeColor(){
   // listen for click on div in #grilla-pixeles
-  $("#grilla-pixeles div").click(function(){
+  $("#grilla-pixeles div").mousedown(function(){
     console.log(this);
-    // store color of pincel in a variable 
-    var pincelColor=indicador.style.backgroundColor;
-    console.log(pincelColor);
-    this.style.backgroundColor=pincelColor;
+    cambioColordePixel(this);
   })
   // change background color of selected div to color of pincel 
 };
 
-//function that listens for a click and stores the color of the div selected in a variable. window
-//window load 
-window.onload = function(){
-  $("#paleta div").click(function(){
-    console.log(this.style.backgroundColor);
-    var color = this.style.backgroundColor;
-    cambioIndicador(color);
-  })
+//function that changes the background color to the color of idicador-de-colorof the element selected (selection)
+function cambioColordePixel(selection){
+  // store color of pincel in a variable 
+  var element= selection
+  var pincelColor=indicador.style.backgroundColor;
+  console.log(pincelColor);
+  element.style.backgroundColor=pincelColor;
 };
-//takes the stored color and changes the background-color of #indicador-de-color
-function cambioIndicador(color){
+
+//function that listens for a click and stores the color of the div selected in a variable. window
+
+
+// Paso 1: Seleccioná un color de la paleta y mostralo en el indicador de color
+//
+function onPaletaClick(event) {
+  var IndicadorDeColor = document.getElementById("indicador-de-color");
+  IndicadorDeColor.style.backgroundColor = event.target.style.backgroundColor;
+ };
+
+ window.onload=function seleccionarColorEnPaleta() {
+  var paleta = document.getElementById("paleta");
+  paleta.addEventListener("click", onPaletaClick);
+ };
+//function for changing background color of indicador-de-color
+ function cambioIndicador(color){
   indicador.style.backgroundColor=color;
 };
+
  
 
 // Variable para guardar el elemento 'color-personalizado'
@@ -95,13 +109,40 @@ colorPersonalizado.addEventListener('change',
   (function() {
     // Se guarda el color de la rueda en colorActual
     colorActual = colorPersonalizado.value;
-    // Completar para que cambie el indicador-de-color al colorActual
-    
-
-
+    cambioIndicador(colorActual);
   })
 );
 
+//una funcion que detecta cada vez que esta apretado el mouse y cada vez que esta suelta
+function mouseDown(){
+  $("#grilla-pixeles div").mousedown(function(){
+    mouseDown=true;
+    console.log(mouseDown);
+  });
+};
+function mouseUp(){
+  $("#grilla-pixeles div").mouseup(function(){
+    mouseDown=false;
+    console.log(mouseDown);
+  });
+};
 
- $(document).ready(crearDivPaleta());
- $(document).ready(changeColor());
+//function that paints the pixel if the mouse is down 
+
+function paint(){
+    $("#grilla-pixeles div").mouseover(function(){
+    if(mouseDown===true){
+      cambioColordePixel(this);
+    }else{
+      return false;
+    };
+    });
+    };
+
+
+$(document).ready(crearDivPaleta());
+$(document).ready(changeColor());
+$(document).ready(mouseUp());
+$(document).ready(mouseDown());
+$(document).ready(paint());
+
