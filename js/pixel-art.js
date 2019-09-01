@@ -138,6 +138,53 @@ function paint(){
     };
     });
     };
+//funcion para borrar la grilla 
+function borrarPixelesGrilla(){
+  $("#borrar").click(function(){
+    //variable que representa todos los divs de la grilla
+    var pixelesGrilla = $("#grilla-pixeles div");
+    pixelesGrilla.animate({"background-color": "white"}, 1000);
+  });
+};
+
+//función para guarder la grilla como png 
+function guardarGrilla(){
+  $("#guardar").click(function(){
+    //variable que representa todos los divs de la grilla
+    guardarPixelArt();
+  });
+};
+
+
+//funcion que carga la imagen de batman a la grilla 
+
+function cargarBatman(){
+  $("#batman").click(function(){
+    console.log("batman");
+    cargarSuperheroe(batman);
+  });
+};
+//funcion que carga la imagen de Wonder Woman a la grilla 
+function cargarWonderWoman(){
+  $("#wonder").click(function(){
+    console.log("wonderWoman");
+    cargarSuperheroe(wonder);
+  });
+};
+//funcion que carga la imagen de flash a la grilla 
+function cargarFlash(){
+  $("#flash").click(function(){
+    console.log("flash");
+    cargarSuperheroe(flash);
+  });
+};
+//funcion que carga la imagen de Mujer Invisible a la grilla 
+function cargarInvisible(){
+  $("#invisible").click(function(){
+    console.log("invisible");
+    cargarSuperheroe(invisible);
+  });
+};
 
 
 $(document).ready(crearDivPaleta());
@@ -145,4 +192,9 @@ $(document).ready(changeColor());
 $(document).ready(mouseUp());
 $(document).ready(mouseDown());
 $(document).ready(paint());
-
+$(document).ready(borrarPixelesGrilla());
+$(document).ready(cargarBatman());
+$(document).ready(cargarWonderWoman());
+$(document).ready(cargarFlash());
+$(document).ready(cargarInvisible());
+$(document).ready(guardarGrilla());
