@@ -20,71 +20,72 @@ var nombreColores = ['White', 'LightYellow',
   'DimGray', 'LightSlateGray', 'DarkSlateGray', 'Black'
 ];
 
-//Variable para seleccionar #paleta del dom y guardarlo en un variable con jQuery
+//Variable para seleccionar #paleta del dom y guardarlo en un variable 
 var paleta = document.getElementById("paleta");
 
-//Variable para seleccionar #grilla-pixeles del dom y guardarlo en un variable con jQuery
+//Variable para seleccionar #grilla-pixeles del dom y guardarlo en un variable 
 var grillaPixeles = document.getElementById("grilla-pixeles");
 //variable para seleccionar #indicador-de-color del dom
 var indicador= document.getElementById("indicador-de-color");
-//variable which is false by default unless the mouse is pressed down
+//variable que es falso cuando el mouse no esta apretado y true si esta apretado
 var mouseDown;
+//Variable para seleccionar los divs del ID #grilla-pixeles del dom
+var grillaDivs= grillaPixeles.getElementsByTagName("div");
 
 
 
 //function que recorra la lista de colores nombreColores y cree un elemento div
- function crearDivPaleta(){
+$(document).ready(function crearDivPaleta(){
   for(var i = 0; i<nombreColores.length; i++){
     var divNuevo = document.createElement("div");
     //asigne clase .color-paleta
     divNuevo.className ="color-paleta";
     //asigne un background-color: color
     divNuevo.style.backgroundColor= nombreColores[i];
-    //Adds an Id which is the same as color so it can be used later
+    //Agrega un Id which que es el mismo del color 
     divNuevo.id = nombreColores[i];
-
     //agrega el elemento como hijo del elemento paleta
     paleta.appendChild(divNuevo);
     };
- };
+ });
 
  //Codigo que crea cajas de la grilla
 
 function crearCajasPixeles(){
   var numeroDePixeles=1750;
+  //un for que recorre el numeroDePixeles para luego crear los pixeles
   for(var i = 0; i<numeroDePixeles; i++){
+    //crea un div para cada pixel
   var pixel=document.createElement("div");
-	pixel.className="cursor-personalizado";
+  //asigna un className a cada pixel
+  pixel.className="cursor-personalizado";
+  //agrega el div al dom como hijo del div grillaPixeles
 	grillaPixeles.appendChild(pixel);
 	
   };
 };
 crearCajasPixeles(grillaPixeles);
 
-// function to change pixel color of div clicked
-function changeColor(){
-  // listen for click on div in #grilla-pixeles
-  $("#grilla-pixeles div").mousedown(function(){
+// funcion que cambia el color del pixel cliqueado 
+$(document).ready(function changeColor(){
+  // escucha para un click del div de #grilla-pixeles
+  $("#grilla-pixeles div").click(function(){
     console.log(this);
+    //invoka la función para cambiar los colores 
     cambioColordePixel(this);
   })
   // change background color of selected div to color of pincel 
-};
+});
 
-//function that changes the background color to the color of idicador-de-colorof the element selected (selection)
+//Cambia el color del fondo del div seleccionado al color de indicador-de-color
 function cambioColordePixel(selection){
-  // store color of pincel in a variable 
   var element= selection
   var pincelColor=indicador.style.backgroundColor;
   console.log(pincelColor);
   element.style.backgroundColor=pincelColor;
 };
 
-//function that listens for a click and stores the color of the div selected in a variable. window
-
-
-// Paso 1: Seleccioná un color de la paleta y mostralo en el indicador de color
-//
+//funcion que escucha para un click y guarda el color del div selecionado en un variable
 function onPaletaClick(event) {
   var IndicadorDeColor = document.getElementById("indicador-de-color");
   IndicadorDeColor.style.backgroundColor = event.target.style.backgroundColor;
@@ -94,7 +95,8 @@ function onPaletaClick(event) {
   var paleta = document.getElementById("paleta");
   paleta.addEventListener("click", onPaletaClick);
  };
-//function for changing background color of indicador-de-color
+//función que cambia el color del fondo del indicador-de-color
+
  function cambioIndicador(color){
   indicador.style.backgroundColor=color;
 };
@@ -102,7 +104,6 @@ function onPaletaClick(event) {
  
 
 // Variable para guardar el elemento 'color-personalizado'
-// Es decir, el que se elige con la rueda de color.
 var colorPersonalizado = document.getElementById('color-personalizado');
 
 colorPersonalizado.addEventListener('change', 
@@ -113,88 +114,85 @@ colorPersonalizado.addEventListener('change',
   })
 );
 
-//una funcion que detecta cada vez que esta apretado el mouse y cada vez que esta suelta
+//dos funciónes que detectan cada vez que esta apretado el mouse y cada vez que esta suelta y luego cambia el valor del variable mouseDown a true o false
 function mouseDown(){
-  $("#grilla-pixeles div").mousedown(function(){
+  $(grillaDivs).mousedown(function(){
     mouseDown=true;
     console.log(mouseDown);
   });
 };
+
 function mouseUp(){
-  $("#grilla-pixeles div").mouseup(function(){
+  $(grillaDivs).mouseup(function(){
     mouseDown=false;
     console.log(mouseDown);
   });
 };
 
-//function that paints the pixel if the mouse is down 
+//si el mouse esta apretado, pinta el pixel con el color seleccionado
 
-function paint(){
-    $("#grilla-pixeles div").mouseover(function(){
+$(document).ready(function paint(){
+    $(grillaDivs).mousemove(function(){
     if(mouseDown===true){
       cambioColordePixel(this);
     }else{
-      return false;
+      return false
+      console.log("mouseDown=False");
     };
     });
-    };
+    });
 //funcion para borrar la grilla 
-function borrarPixelesGrilla(){
+$(document).ready(function borrarPixelesGrilla(){
   $("#borrar").click(function(){
     //variable que representa todos los divs de la grilla
     var pixelesGrilla = $("#grilla-pixeles div");
     pixelesGrilla.animate({"background-color": "white"}, 1000);
   });
-};
+});
 
 //función para guarder la grilla como png 
-function guardarGrilla(){
+$(document).ready(function guardarGrilla(){
   $("#guardar").click(function(){
     //variable que representa todos los divs de la grilla
     guardarPixelArt();
   });
-};
+});
 
 
 //funcion que carga la imagen de batman a la grilla 
-
-function cargarBatman(){
+$(document).ready(function cargarBatman(){
   $("#batman").click(function(){
     console.log("batman");
     cargarSuperheroe(batman);
   });
-};
+});
+
 //funcion que carga la imagen de Wonder Woman a la grilla 
-function cargarWonderWoman(){
+$(document).ready(function cargarWonderWoman(){
   $("#wonder").click(function(){
     console.log("wonderWoman");
     cargarSuperheroe(wonder);
   });
-};
+});
+
 //funcion que carga la imagen de flash a la grilla 
-function cargarFlash(){
+$(document).ready(function cargarFlash(){
   $("#flash").click(function(){
     console.log("flash");
     cargarSuperheroe(flash);
   });
-};
+});
+
 //funcion que carga la imagen de Mujer Invisible a la grilla 
-function cargarInvisible(){
+$(document).ready(function cargarInvisible(){
   $("#invisible").click(function(){
     console.log("invisible");
     cargarSuperheroe(invisible);
   });
-};
+});
 
 
-$(document).ready(crearDivPaleta());
-$(document).ready(changeColor());
+
 $(document).ready(mouseUp());
 $(document).ready(mouseDown());
-$(document).ready(paint());
-$(document).ready(borrarPixelesGrilla());
-$(document).ready(cargarBatman());
-$(document).ready(cargarWonderWoman());
-$(document).ready(cargarFlash());
-$(document).ready(cargarInvisible());
-$(document).ready(guardarGrilla());
+
